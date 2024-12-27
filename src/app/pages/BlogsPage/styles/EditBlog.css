@@ -1,0 +1,83 @@
+.edit-blog-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.blog-form-container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fafafa;
+  color: #333;
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.submit-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.success-message {
+  color: #28a745;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.error-message {
+  color: #dc3545;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}

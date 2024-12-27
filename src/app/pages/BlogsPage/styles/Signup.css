@@ -1,0 +1,102 @@
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+}
+
+.auth-btn {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-btn:hover {
+  background-color: #0056b3;
+}
+
+.switch-link {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.switch-link button {
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.switch-link button:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 15px;
+  }
+
+  .auth-form h2 {
+    font-size: 20px;
+  }
+
+  .form-group input {
+    font-size: 13px;
+  }
+
+  .auth-btn {
+    font-size: 14px;
+  }
+}
