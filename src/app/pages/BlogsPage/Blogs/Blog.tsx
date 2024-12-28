@@ -3,11 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import '../styles/Blog.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { BlogActions, useBlogSlice } from '../slice/blogSlice';
-import {
-  selectIsLoading,
-  selectRequestSuccess,
-  selectSpecificBlog,
-} from '../slice/selectors';
+import { selectIsLoading, selectSpecificBlog } from '../slice/selectors';
 
 const BlogPost: React.FC = () => {
   useBlogSlice();

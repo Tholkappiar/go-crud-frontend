@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/CreateBlog.css';
-import { BlogActions, useBlogSlice } from '../slice/blogSlice';
+import { BlogActions } from '../slice/blogSlice';
 import { selectIsLoading, selectRequestSuccess } from '../slice/selectors';
 
 const CreateBlog = () => {
-  useBlogSlice();
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
