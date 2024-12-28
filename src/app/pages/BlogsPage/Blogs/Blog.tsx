@@ -16,7 +16,6 @@ const BlogPost: React.FC = () => {
   const dispatch = useDispatch();
   const blog = useSelector(selectSpecificBlog);
   const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectRequestSuccess);
 
   useEffect(() => {
     if (id) {
@@ -26,10 +25,6 @@ const BlogPost: React.FC = () => {
 
   if (loading) {
     return <div className="blog-post-loading">Loading...</div>;
-  }
-
-  if (!error) {
-    return <div className="blog-post-error">{error}</div>;
   }
 
   if (!blog) {

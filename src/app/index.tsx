@@ -17,6 +17,7 @@ import Login from './pages/BlogsPage/auth/Login';
 import Signup from './pages/BlogsPage/auth/Signup';
 import CreateBlog from './pages/BlogsPage/Blogs/CreateBlog';
 import EditBlog from './pages/BlogsPage/Blogs/EditBlog';
+import RequireAuth from './pages/BlogsPage/auth/RequireAuth';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -30,11 +31,11 @@ export function App() {
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
       <Routes>
-        {/* <Route element={<RequireAuth />}> */}
-        <Route path="/create" element={<CreateBlog />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/create" element={<CreateBlog />} />
+          <Route path="/editBlog/:id" element={<EditBlog />} />
+        </Route>
         <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/editBlog/:id" element={<EditBlog />} />
-        {/* </Route> */}
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
