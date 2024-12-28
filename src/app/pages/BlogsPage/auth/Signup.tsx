@@ -1,7 +1,12 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
 import '../styles/Signup.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useUserSlice } from '../slice/userSlice';
+import {
+  selectUserIsLoading,
+  selectUserRequestStatus,
+} from '../slice/userSelectors';
 
 interface FormData {
   email: string;
@@ -13,7 +18,6 @@ interface FormErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
-  api?: string;
 }
 
 function Signup() {
@@ -24,9 +28,13 @@ function Signup() {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
-  const [successMessage, setSuccessMessage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { actions } = useUserSlice();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isLoading = useSelector(selectUserIsLoading);
+  const RequestSuccess = useSelector(selectUserRequestStatus);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
     setFormData(prevData => ({
@@ -52,7 +60,7 @@ function Signup() {
     return newErrors;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const validationErrors = validateForm();
@@ -62,50 +70,24 @@ function Signup() {
     }
 
     setErrors({});
-    setIsLoading(true);
 
-    try {
-      const response = await axios.post<{ message: string }>(
-        'http://localhost:8080/user/register',
-        {
-          email: formData.email,
-          password: formData.password,
-        },
-      );
-      setSuccessMessage(
-        response.data.message ||
-          'Sign up successful! Please check your email for confirmation.',
-      );
-
-      setFormData({
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-      if (response) {
-        navigate('/login');
-      }
-    } catch (error: any) {
-      console.error('Error:', error.response || error.message);
-      setErrors({
-        api:
-          error.response?.data?.message ||
-          'An error occurred. Please try again.',
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(
+      actions.registerUser({
+        email: formData.email,
+        password: formData.password,
+      }),
+    );
   };
+
+  if (!isLoading && RequestSuccess) {
+    navigate('/login');
+  }
 
   return (
     <div className="signup-wrapper">
       <div className="auth-container">
         <form className="auth-form" onSubmit={handleSubmit}>
           <h2>Sign Up</h2>
-          {successMessage && (
-            <p className="success-message">{successMessage}</p>
-          )}
-          {errors.api && <p className="error">{errors.api}</p>}
 
           <div className="form-group">
             <label htmlFor="email">Email</label>

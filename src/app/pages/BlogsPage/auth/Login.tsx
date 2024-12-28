@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import '../styles/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { UserActions, useUserSlice } from '../slice/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectUserData,
+  selectUserIsLoading,
+  selectUserRequestStatus,
+} from '../slice/userSelectors';
 
 function Login() {
+  useUserSlice();
+
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -11,37 +19,35 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleChange = e => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = useCallback(e => {
+    const { name, value } = e.target;
+    setUserData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  }, []);
 
-  const handleSubmit = async e => {
+  const isLoading = useSelector(selectUserIsLoading);
+  const requestStatus = useSelector(selectUserRequestStatus);
+
+  const user = useSelector(selectUserData);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = e => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        'http://localhost:8080/user/login',
-        userData,
-      );
-      if (response) {
-        console.log(response);
-        const jwt = response.data?.session?.access_token;
-        const userid = response.data?.session?.user?.id;
-
-        localStorage.setItem('jwt', jwt);
-        localStorage.setItem('userId', userid);
-        navigate('/blogs');
-      } else {
-        alert('Invalid email or password');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('An error occurred while logging in');
-    }
+    dispatch(UserActions.loginUser(userData));
   };
+
+  useEffect(() => {
+    if (!isLoading && requestStatus) {
+      localStorage.setItem('jwt', user.jwt);
+      localStorage.setItem('userID', user.user_id);
+      navigate('/blogs');
+    }
+  }, [isLoading, requestStatus, user, navigate]);
+
+  if (isLoading) return <p>Loading ...</p>;
 
   return (
     <div className="login-wrapper">

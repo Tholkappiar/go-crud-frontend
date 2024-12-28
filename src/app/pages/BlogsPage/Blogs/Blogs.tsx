@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
 import '../styles/Blogs.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useBlogSlice } from '../slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlogs, selectIsLoading } from '../slice/selectors';
-import { Blog } from '../slice/types';
+import { useBlogSlice } from '../slice/blogSlice';
 
 const BlogsPage: React.FC = () => {
   const { actions } = useBlogSlice();
   const dispatch = useDispatch();
-  const blogs = useSelector(selectBlogs) as Blog[];
   const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
-    dispatch(actions.getBlogs());
+    dispatch(actions.readBlogs());
   }, [actions, dispatch]);
 
+  const blogs = useSelector(selectBlogs);
   const navigate = useNavigate();
 
   const handleDelete = (blogId: number) => {
@@ -47,7 +46,7 @@ const BlogsPage: React.FC = () => {
                   <p>{blog.Description}</p>
                 </div>
               </Link>
-              {blog.user_id === localStorage.getItem('userId') && (
+              {blog.user_id === localStorage.getItem('userID') && (
                 <div className="blog-buttons">
                   <Link to={`/editBlog/${blog.Id}`}>
                     <button>Edit</button>

@@ -1,32 +1,23 @@
 import { RootState } from 'types';
-import { initialState } from '.';
 import { createSelector } from '@reduxjs/toolkit';
+import { initialState } from './blogSlice';
 
-const selectSlice = (state: RootState) => state?.blogs || initialState;
+const selectSlice = (state: RootState) => state.blogSlice || initialState;
 
-export const selectBlogs = createSelector([selectSlice], state => state.blogs);
+export const selectBlogs = createSelector([selectSlice], state => {
+  return state.blogs;
+});
 
-export const selectSpecificBlog = createSelector(
-  [selectSlice],
-  state => state.currentBlog,
-);
+export const selectSpecificBlog = createSelector([selectSlice], state => {
+  return state.blog;
+});
 
 export const selectIsLoading = createSelector(
   [selectSlice],
   state => state.isLoading,
 );
 
-export const selectFailureResponse = createSelector(
+export const selectRequestSuccess = createSelector(
   [selectSlice],
-  state => state.failureResponse,
-);
-
-export const selectUpdateResponse = createSelector(
-  [selectSlice],
-  state => state.updateSuccess,
-);
-
-export const selectCreateResponse = createSelector(
-  [selectSlice],
-  state => state.createSuccess,
+  state => state.requestSuccess,
 );

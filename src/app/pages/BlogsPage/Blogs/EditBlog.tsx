@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/EditBlog.css';
-import { BlogActions, useBlogSlice } from '../slice';
+import { BlogActions, useBlogSlice } from '../slice/blogSlice';
 import {
-  selectSpecificBlog,
   selectIsLoading,
-  selectFailureResponse,
-  selectUpdateResponse,
+  selectRequestSuccess,
+  selectSpecificBlog,
 } from '../slice/selectors';
 
 const EditBlog = () => {
@@ -22,11 +21,11 @@ const EditBlog = () => {
 
   const blog = useSelector(selectSpecificBlog);
   const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectUpdateResponse);
+  const error = useSelector(selectRequestSuccess);
 
   useEffect(() => {
     if (id) {
-      dispatch(BlogActions.getSpecificBlog(Number(id)));
+      dispatch(BlogActions.readBlog(id));
     }
   }, [dispatch, id]);
 

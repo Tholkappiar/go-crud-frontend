@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/CreateBlog.css';
-import { BlogActions, useBlogSlice } from '../slice';
-import { selectIsLoading, selectCreateResponse } from '../slice/selectors';
+import { BlogActions, useBlogSlice } from '../slice/blogSlice';
+import { selectIsLoading, selectRequestSuccess } from '../slice/selectors';
 
 const CreateBlog = () => {
   useBlogSlice();
@@ -13,8 +13,9 @@ const CreateBlog = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectCreateResponse);
+  const requestSuccess = useSelector(selectRequestSuccess);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -23,11 +24,13 @@ const CreateBlog = () => {
     );
   };
 
+  console.log(requestSuccess); // true
+  console.log(loading); // false
   useEffect(() => {
-    if (error) {
+    if (requestSuccess && !loading) {
       navigate('/blogs');
     }
-  }, [error, navigate]);
+  }, [requestSuccess, loading, navigate]);
 
   return (
     <div className="create-blog-page">
@@ -55,7 +58,6 @@ const CreateBlog = () => {
               placeholder="Enter blog description"
             ></textarea>
           </div>
-          {error && <div className="error">{error}</div>}
           <button type="submit" className="submit-button" disabled={loading}>
             {loading ? 'Creating...' : 'Create Blog'}
           </button>

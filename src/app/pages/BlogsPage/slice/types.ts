@@ -1,10 +1,8 @@
 export interface BlogState {
-  isLoading: boolean;
   blogs: Blog[];
-  currentBlog: Blog | null;
-  failureResponse: string | null;
-  updateSuccess: boolean;
-  createSuccess: boolean;
+  blog: Blog;
+  isLoading: boolean;
+  requestSuccess: boolean;
 }
 
 export interface Blog {
@@ -12,4 +10,15 @@ export interface Blog {
   Id: number;
   Title: string;
   Description: string;
+}
+
+export interface user {
+  user_id: string;
+  jwt: string;
+}
+
+export interface userState {
+  user: user;
+  isLoading: boolean;
+  RequestSuccess: boolean;
 }

@@ -1,11 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
+import { selectUserData } from '../slice/userSelectors';
 
 const RequireAuth = () => {
-  const jwt = localStorage.getItem('jwt');
-  const userid = localStorage.getItem('userid');
+  const { jwt, user_id } = useSelector(selectUserData);
 
-  if (!jwt || !userid) {
+  if (!jwt || !user_id) {
     return <Navigate to="/login" />;
   }
 

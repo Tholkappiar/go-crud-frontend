@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../styles/Blog.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { BlogActions, useBlogSlice } from '../slice';
+import { BlogActions, useBlogSlice } from '../slice/blogSlice';
 import {
-  selectSpecificBlog,
   selectIsLoading,
-  selectFailureResponse,
+  selectRequestSuccess,
+  selectSpecificBlog,
 } from '../slice/selectors';
 
 const BlogPost: React.FC = () => {
@@ -16,22 +16,19 @@ const BlogPost: React.FC = () => {
   const dispatch = useDispatch();
   const blog = useSelector(selectSpecificBlog);
   const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectFailureResponse);
+  const error = useSelector(selectRequestSuccess);
 
   useEffect(() => {
     if (id) {
-      dispatch(BlogActions.getSpecificBlog(Number(id)));
+      dispatch(BlogActions.readBlog(id));
     }
-    return () => {
-      dispatch(BlogActions.resetSpecificBlog());
-    };
   }, [dispatch, id]);
 
   if (loading) {
     return <div className="blog-post-loading">Loading...</div>;
   }
 
-  if (error) {
+  if (!error) {
     return <div className="blog-post-error">{error}</div>;
   }
 
