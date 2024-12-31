@@ -22,8 +22,8 @@ const CreateBlog = () => {
     );
   };
 
-  console.log(requestSuccess); // true
-  console.log(loading); // false
+  console.log(requestSuccess);
+  console.log(loading);
   useEffect(() => {
     if (requestSuccess && !loading) {
       navigate('/blogs');
@@ -34,7 +34,7 @@ const CreateBlog = () => {
     <div className="create-blog-page">
       <div className="create-blog-container">
         <h1>Create New Blog Post</h1>
-        <form onSubmit={handleSubmit}>
+        <form data-testid="formSubmit" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Blog Title</label>
             <input

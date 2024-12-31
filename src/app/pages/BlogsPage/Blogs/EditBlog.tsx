@@ -72,7 +72,7 @@ const EditBlog = () => {
     <div className="edit-blog-page">
       <div className="blog-form-container">
         <h1>Edit Blog Post</h1>
-        <form onSubmit={handleSubmit}>
+        <form data-testid="formSubmit" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
             <input
