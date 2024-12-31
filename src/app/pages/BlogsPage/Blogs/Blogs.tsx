@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/Blogs.css';
+// import '../styles/Blogs.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBlogs, selectIsLoading } from '../slice/selectors';
